@@ -2,21 +2,25 @@
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
     context: __dirname + '/src_client',
 
     entry: {
-        home: './home',
-        about: './about'
+        app: './app.js'//,
+        //app: './app',
+        //searchResult: './SearchResult',
+        //welcome: './welcome'
+
     },
     output: {
-        path: __dirname + '/build',
-        filename: "[name].js",
-        library: "[name]"
+        path: __dirname + '/public',
+        filename: 'app.js',//"[name].js",
+        library: "app"
     },
 
-    watch: true,
+    watch: NODE_ENV == 'development',
 
     watchOptions: {
         aggregateTimeout: 100
@@ -30,11 +34,17 @@ module.exports = {
     ],
 
     module: {
-        loaders: [{
-            test: /\.js$/,
-            loader: 'babel?presets[]=es2015',
-            exclude: /node_modules/
-        }]
+        loaders: [
+            {
+                test: /\.js$/,
+                exclude: path.resolve(__dirname, "node_modules"),
+                loader: 'babel?presets[]=es2015'
+            },
+            {
+                test: /\.css$/,
+                loader: 'style!css'
+            }
+        ]
     }
 
 };

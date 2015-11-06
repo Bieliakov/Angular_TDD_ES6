@@ -1,0 +1,37 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script src="app.js"></script>
+<div ng-controller="homeController as home" ng-cloak>
+    <form method="get">
+
+        <input type="search" data-search="searchQuery" ng-model="searchText"/>
+        <input type="submit" data-search="submitButton" ng-click="home.clickSubmitButton(searchText)" />
+
+    </form>
+
+
+
+    <div id='results_container' ng-repeat="result in home.searchResults">
+        <div ng-bind="result.full_name"></div>
+    </div>
+    <div ng-if="home.searchResults.length < 1">
+            There are no results for query {{searchText}}
+        </div>
+
+</div>
+
+<!--
+
+-->
+
+
+
+
+
+</body>
+</html>

@@ -15,5 +15,8 @@
     "gulp": "^3.9.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
+  },
+  "dependencies": {
+    "angular": "^1.4.7"
   }
 }

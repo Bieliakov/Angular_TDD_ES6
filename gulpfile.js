@@ -1,7 +1,6 @@
 var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 //var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
-var url = require('url');                   //  url tool
 var webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./webpack.config.js");
@@ -18,16 +17,16 @@ var util = require('gulp-util');        //  Helps to write some logs out
 //var gulpif = require('gulp-if');        //  Plugin for adding 'if' condition to a stream (process)
 
 
-gulp.task("webpack-dev-server", function(callback) {
+gulp.task('dev', function(callback) {
     // Start a webpack-dev-server
     var compiler = webpack(webpackConfig);
 
     new WebpackDevServer(compiler, {
         // server and middleware options
     }).listen(8080, "localhost", function(err) {
-        if(err) throw new util.PluginError("webpack-dev-server", err);
+        if(err) throw new util.PluginError("dev", err);
         // Server listening
-        util.log("[webpack-dev-server]", "http://localhost:8080/build/index.html");
+        util.log("[dev]", "http://localhost:8080/public/index.html");
 
         // keep the server alive or continue?
         // callback();
@@ -48,9 +47,9 @@ gulp.task("webpack-dev-server", function(callback) {
 //gulp.task('serverGulp', function(){
 //    connect.server({
 //        port: 8080,                                 // Server started at http://localhost:8080
-//        root: 'build',                              // place where our main files are
+//        root: 'public',                              // place where our main files are
 //        livereload: true                            // livereload for our server
 //    })
 //});
 
-gulp.task("default", ["webpack-dev-server"]);
+gulp.task("default", ["dev"]);
