@@ -2,8 +2,7 @@ var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 //var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
 var webpack = require("webpack");
-var WebpackDevServer = require("webpack-dev-server");
-var webpackConfig = require("./webpack.config.js");
+
 
 // unit testing
 //var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
@@ -18,11 +17,15 @@ var util = require('gulp-util');        //  Helps to write some logs out
 
 
 gulp.task('dev', function(callback) {
-    // Start a webpack-dev-server
+    var WebpackDevServer = require("webpack-dev-server");
+    var webpackConfig = require("./webpack.config.js");
+
     var compiler = webpack(webpackConfig);
 
+    // Start a webpack-dev-server
     new WebpackDevServer(compiler, {
-        // server and middleware options
+        //historyApiFallback: true,
+        //publicPath: '/src_client/'
     }).listen(8080, "localhost", function(err) {
         if(err) throw new util.PluginError("dev", err);
         // Server listening

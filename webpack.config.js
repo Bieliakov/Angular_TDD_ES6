@@ -1,50 +1,83 @@
 'use strict';
 
-const NODE_ENV = process.env.NODE_ENV || 'development';
 const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-    context: __dirname + '/src_client',
+    context: path.resolve(__dirname, 'src_client'),
 
     entry: {
-        app: './app.js'//,
-        //app: './app',
-        //searchResult: './SearchResult',
-        //welcome: './welcome'
-
+        app: './app.js'
     },
     output: {
-        path: __dirname + '/public',
-        filename: 'app.js',//"[name].js",
-        library: "app"
+        path: path.resolve(__dirname, 'public'),
+        filename: "[name].bundle.js",
+        library: "[name]",
+        publicPath: "/"
     },
 
-    watch: NODE_ENV == 'development',
+    watch: true,
 
     watchOptions: {
         aggregateTimeout: 100
     },
-    devtool: NODE_ENV  == 'development' ? "cheap-module-inline-source-map" : null,
+
+    devtool: "cheap-module-inline-source-map",
+
     plugins: [
+        new webpack.NoErrorsPlugin(),
         new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV),
+            NODE_ENV: JSON.stringify('Some var'),
             USER: '"hello"'
         })
+        //, new webpack.optimize.commonsChunkPlugin({
+        //    name: 'common'
+        //})
     ],
 
     module: {
         loaders: [
             {
                 test: /\.js$/,
+                include: path.resolve(__dirname,'src_client'),
                 exclude: path.resolve(__dirname, "node_modules"),
-                loader: 'babel?presets[]=es2015'
+                loader: 'babel-loader?presets[]=es2015'
+            }
+            ,{
+                test: /\.css$/,
+                loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions'
             },
             {
-                test: /\.css$/,
-                loader: 'style!css'
+                test: /\.(eot|svg|ttf|woff|woff2)\w*/,
+                loader: 'file'
+            },
+            {
+                test: /\.html$/,
+                loader: 'raw'
             }
-        ]
+        ],
+        noParse: /angular\/angular.js/
     }
 
+    //,resolve: {
+    //    root: [
+    //        path.resolve(__dirname),
+    //        path.resolve(__dirname, 'src_client/'),
+    //        path.resolve(__dirname, 'src_client/search/')
+    //    ]
+    //}
+    // ,resolve: {
+    //    modulesDirectories: ['node_modules'],
+    //    extensions: ['', '.js']
+    //}
+
+    //,resolveLoader: {
+    //    modulesDirectories: ['node_modules'],
+    //    moduleTemplates: ['*-loader', '*'],
+    //    extensions: ['', '.js']
+    //}
+    //, devServer: {
+    //    host: 'localhost',
+    //    port: 8080
+    //}
 };
