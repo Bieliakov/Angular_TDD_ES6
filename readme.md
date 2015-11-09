@@ -10,6 +10,18 @@ https://webpack.github.io/docs/usage-with-gulp.html https://github.com/webpack/w
 
 todo: []
 
-todo in stack: [ 'watch TDD by Andrey Kucherenko', 'read John Papa"s style guide', 'reading and practising ES6', 'learning and practising Angular', 'continue watching webpack videos',
+https://webpack.github.io/docs/usage-with-gulp.html
+https://github.com/webpack/webpack-with-common-libs/blob/master/gulpfile.js
+]
 
-] Later: 'introduction to React.js'
+todo in stack:
+[
+'watch TDD by Andrey Kucherenko',
+'read John Papa"s style guide',
+'reading and practising ES6',
+'learning and practising Angular',
+'continue watching webpack videos',
+
+]
+Later:
+'introduction to React.js'
