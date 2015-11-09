@@ -26,4 +26,4 @@ todo in stack:
 Later:
 'introduction to React.js'
 
-'and become a great Developer :)'
+'and become a great Developer   :)'
