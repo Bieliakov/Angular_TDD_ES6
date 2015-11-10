@@ -13,6 +13,7 @@ module.exports = {
         path: path.resolve(__dirname, 'public'),
         filename: "[name].bundle.js",
         library: "[name]",
+        //chunkFilename: "[id].bundle.js",
         publicPath: "/"
     },
 
@@ -30,6 +31,7 @@ module.exports = {
             NODE_ENV: JSON.stringify('Some var'),
             USER: '"hello"'
         })
+        //, new webpack.optimize.CommonsChunkPlugin('common.bundle.js')
         //, new webpack.optimize.commonsChunkPlugin({
         //    name: 'common'
         //})
@@ -53,7 +55,7 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'raw'
+                loader: 'raw'//raw
             }
         ],
         noParse: /angular\/angular.js/
