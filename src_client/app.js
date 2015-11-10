@@ -4,7 +4,7 @@ import SearchResult from './SearchResult';
 import MainSearch from './mainSearch';
 
 let mainSearch = new MainSearch();
-console.log('mainSearch', mainSearch)
+console.log('mainSearch', mainSearch);
 document.body.appendChild(mainSearch.elem);
 
 

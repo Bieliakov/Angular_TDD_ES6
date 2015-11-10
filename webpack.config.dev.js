@@ -10,11 +10,11 @@ module.exports = {
         app: './app.js'
     },
     output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'public', 'src_client'),
         filename: "[name].bundle.js",
         library: "[name]",
         //chunkFilename: "[id].bundle.js",
-        publicPath: "/"
+        publicPath: "src_client/"
     },
 
     watch: true,

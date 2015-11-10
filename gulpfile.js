@@ -37,14 +37,14 @@ gulp.task('release', ['copy-html'], function(){
 
 gulp.task('dev', function(callback) {
     var WebpackDevServer = require("webpack-dev-server");
-    var webpackConfig = require("./webpack.config.js");
+    var webpackConfig = require("./webpack.config.dev.js");
 
     var compiler = webpack(webpackConfig);
 
     // Start a webpack-dev-server
     new WebpackDevServer(compiler, {
-        //historyApiFallback: true,
-        //publicPath: '/src_client/'
+        //, historyApiFallback: true
+        //publicPath: 'src_client/'
     }).listen(8080, "localhost", function(err) {
         if(err) throw new util.PluginError("dev", err);
         // Server listening
