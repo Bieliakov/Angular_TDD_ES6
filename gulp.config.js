@@ -1,4 +1,4 @@
-var src = 'src_client/';
+var src = './';
 
 module.exports = {
         /**
