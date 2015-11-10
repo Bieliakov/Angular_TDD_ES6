@@ -1,9 +1,10 @@
-var src = './';
+var src = 'src_client/';
 
 module.exports = {
         /**
          * File paths
          **/
         // all src js files
-        allhtml: [src + 'index.html']
+        allhtml: [src + 'index.html'],
+        allJSspecs: ['specs/js/**/*_spec.js']
 };

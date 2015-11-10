@@ -10,7 +10,7 @@ module.exports = {
         app: './app.js'
     }
     ,output: {
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, 'public', 'js')
         ,filename: "[name].bundle.js"
         ,library: "[name]"
         //chunkFilename: "[id].bundle.js",
@@ -23,7 +23,7 @@ module.exports = {
                 test: /\.js$/
                 ,include: path.resolve(__dirname,'src_client')
                 ,exclude: path.resolve(__dirname, "node_modules")
-                ,loader: 'babel-loader?presets[]=es2015'
+                ,loader: 'babel-loader?presets[]=es2015' // !ng-annotate-loader
             }
             ,{
                 test: /\.css$/
@@ -43,7 +43,6 @@ module.exports = {
 
 
     //,plugins: [
-    //
     //    new webpack.optimize.UglifyJsPlugin({
     //        compress: {
     //            warnings: false
