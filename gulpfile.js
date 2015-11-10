@@ -2,7 +2,7 @@ var gulp = require('gulp');                 //  main gulp module
 var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
 //var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
 var webpack = require("webpack");
-
+var config = require('./gulp.config.js');
 
 // unit testing
 //var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
@@ -15,6 +15,25 @@ var util = require('gulp-util');        //  Helps to write some logs out
 //var gulpprint = require('gulp-print');  //  For printing all the files that gulp is 'touching' in a process
 //var gulpif = require('gulp-if');        //  Plugin for adding 'if' condition to a stream (process)
 
+
+gulp.task('copy-html', function () {
+    return gulp
+        .src(config.allhtml)
+        .pipe(gulp.dest('./public'))
+
+});
+
+gulp.task('release', ['copy-html'], function(){
+
+    var webpackReleaseConfig = require('./webpack.config.release.js');
+    webpack(webpackReleaseConfig, function(err, stats) {
+        if (err) {
+            throw new util.PluginError('webpack', err);
+        }
+    });
+
+
+});
 
 gulp.task('dev', function(callback) {
     var WebpackDevServer = require("webpack-dev-server");
