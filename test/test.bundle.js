@@ -54,6 +54,8 @@
 
 	__webpack_require__(7);
 
+	__webpack_require__(8);
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -31553,6 +31555,36 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _HomeController = __webpack_require__(5);
+
+	var _HomeController2 = _interopRequireDefault(_HomeController);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var homeController = undefined;
+
+	exports.default = describe('HomeController controller', function () {
+
+	    beforeEach(function () {
+	        homeController = new _HomeController2.default();
+	        console.log('homeController', homeController);
+	    });
+
+	    it('should have clickSubmitButton function', function () {
+	        expect(homeController.clickSubmitButton).toEqual(jasmine.any(Function));
+	    });
+	});
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	var _SearchResult = __webpack_require__(6);
 
 	var _SearchResult2 = _interopRequireDefault(_SearchResult);
@@ -31560,25 +31592,48 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var searchResult = undefined;
-
+	var $httpBackend;
+	var result = undefined;
+	var baseURL = 'some/false/url';
 	describe('SearchResult service', function () {
 
-	    beforeEach(function () {
-	        angular.mock.module('app');
+	    //beforeEach(angular.mock.module('app'));
 
-	        searchResult = new _SearchResult2.default();
-	        //console.log('$http', $http);
-	        console.log('searchResult', searchResult);
+	    beforeEach(inject(function ($injector) {
+	        $httpBackend = $injector.get('$httpBackend');
+	    }));
+
+	    beforeEach(function () {
+	        searchResult = new _SearchResult2.default($httpBackend);
 	    });
 
 	    it('should have getResults method', function () {
 	        expect(searchResult.getResults).toEqual(jasmine.any(Function));
 	    });
 
-	    xit('should return and array after invocation', function () {
-	        var result = searchResult.getResults();
+	    describe('getResults method', function () {
 
-	        expect(result).toEqual(jasmine.any(Array));
+	        beforeEach(function () {
+	            console.log('$httpBackend', $httpBackend);
+	            //console.log('angular', angular);
+	            console.log('searchResult', searchResult);
+	            //result = searchResult.getResults();
+	        });
+
+	        //afterEach(function() {
+	        //    $httpBackend.verifyNoOutstandingExpectation();
+	        //    $httpBackend.verifyNoOutstandingRequest();
+	        //});
+
+	        xit('should be invoked with proper url', function () {
+	            $httpBackend.expectGET(baseURL);
+	            result = searchResult.getResults();
+	            $httpBackend.flush();
+	        });
+
+	        it('should return and array after invocation', function () {
+	            //expect(result).toEqual(jasmine.any(Array));
+	        });
 	    });
 	});
 

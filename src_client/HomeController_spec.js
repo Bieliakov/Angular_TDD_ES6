@@ -1,21 +1,18 @@
 
 import HomeController from './HomeController';
 
+let homeController;
+
 export default describe('HomeController controller', () => {
-/*
+
     beforeEach(function(){
-        searchResult = new SearchResult();
+        homeController = new HomeController();
+        console.log('homeController', homeController)
     });
 
-    it('should have getResults method', () => {
-        expect(searchResult.getResults).toEqual(jasmine.any(Function));
+    it('should have clickSubmitButton function', () => {
+        expect(homeController.clickSubmitButton).toEqual(jasmine.any(Function));
     });
 
-    it('should return and array after invocation', () => {
-        var result = searchResult.getResults();
-
-        expect(result).toEqual(jasmine.any(Array));
-    });
-*/
 });
 
