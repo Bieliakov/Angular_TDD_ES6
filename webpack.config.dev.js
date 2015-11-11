@@ -42,7 +42,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 include: path.resolve(__dirname,'src_client'),
-                exclude: path.resolve(__dirname, "node_modules"),
+                exclude: [path.resolve(__dirname, "node_modules"), /_spec.js$/],
                 loader: 'babel-loader?presets[]=es2015'
             }
             ,{
