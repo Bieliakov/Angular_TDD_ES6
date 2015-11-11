@@ -52,9 +52,9 @@
 
 	__webpack_require__(4);
 
-	__webpack_require__(7);
-
 	__webpack_require__(8);
+
+	__webpack_require__(9);
 
 /***/ },
 /* 1 */
@@ -31455,6 +31455,18 @@
 
 	'use strict';
 
+	var _app = __webpack_require__(5);
+
+	var _app2 = _interopRequireDefault(_app);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -31463,11 +31475,11 @@
 
 	var _angular2 = _interopRequireDefault(_angular);
 
-	var _HomeController = __webpack_require__(5);
+	var _HomeController = __webpack_require__(6);
 
 	var _HomeController2 = _interopRequireDefault(_HomeController);
 
-	var _SearchResult = __webpack_require__(6);
+	var _SearchResult = __webpack_require__(7);
 
 	var _SearchResult2 = _interopRequireDefault(_SearchResult);
 
@@ -31482,7 +31494,7 @@
 	//document.body.appendChild(mainSearch.elem);
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31514,7 +31526,7 @@
 	HomeController.$inject = ['SearchResult'];
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31550,7 +31562,7 @@
 	SearchResult.$inject = ['$http'];
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31559,7 +31571,7 @@
 	    value: true
 	});
 
-	var _HomeController = __webpack_require__(5);
+	var _HomeController = __webpack_require__(6);
 
 	var _HomeController2 = _interopRequireDefault(_HomeController);
 
@@ -31580,12 +31592,12 @@
 	});
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _SearchResult = __webpack_require__(6);
+	var _SearchResult = __webpack_require__(7);
 
 	var _SearchResult2 = _interopRequireDefault(_SearchResult);
 
