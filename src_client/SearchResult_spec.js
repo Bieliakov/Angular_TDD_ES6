@@ -2,15 +2,21 @@
 import SearchResult from './SearchResult';
 
 let searchResult;
-
+var $httpBackend;
+let result;
+let baseURL = 'some/false/url';
 describe('SearchResult service', () => {
-    
+
+    //beforeEach(angular.mock.module('app'));
+
+    beforeEach(inject(function($injector) {
+        $httpBackend = $injector.get('$httpBackend');
+    }));
+
+
     beforeEach(
         function(){
-            angular.mock.module('app');
-            searchResult = new SearchResult();
-            //console.log('$http', $http);
-            console.log('searchResult', searchResult)
+            searchResult = new SearchResult($httpBackend);
         }
     );
 
@@ -18,10 +24,31 @@ describe('SearchResult service', () => {
         expect(searchResult.getResults).toEqual(jasmine.any(Function));
     });
 
-    xit('should return and array after invocation', () => {
-        var result = searchResult.getResults();
+    describe('getResults method', () => {
 
-        expect(result).toEqual(jasmine.any(Array));
+        beforeEach(function(){
+            console.log('$httpBackend', $httpBackend);
+            //console.log('angular', angular);
+            console.log('searchResult', searchResult);
+            //result = searchResult.getResults();
+        });
+
+        //afterEach(function() {
+        //    $httpBackend.verifyNoOutstandingExpectation();
+        //    $httpBackend.verifyNoOutstandingRequest();
+        //});
+
+        xit('should be invoked with proper url', () => {
+            $httpBackend.expectGET(baseURL);
+            result = searchResult.getResults();
+            $httpBackend.flush();
+        });
+
+
+        it('should return and array after invocation', () => {
+            //expect(result).toEqual(jasmine.any(Array));
+        });
+
     });
 
 });
