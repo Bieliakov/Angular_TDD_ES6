@@ -22,7 +22,7 @@ module.exports = {
             {
                 test: /\.js$/
                 ,include: path.resolve(__dirname,'src_client')
-                ,exclude: path.resolve(__dirname, "node_modules")
+                ,exclude: [path.resolve(__dirname, "node_modules"), /_spec.js$/]
                 ,loader: 'babel-loader?presets[]=es2015' // !ng-annotate-loader
             }
             ,{
@@ -42,13 +42,13 @@ module.exports = {
     }
 
 
-    //,plugins: [
-    //    new webpack.optimize.UglifyJsPlugin({
-    //        compress: {
-    //            warnings: false
-    //            ,drop_console: true
-    //            , unsafe: true
-    //        }
-    //    })
-    //]
+    ,plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+                ,drop_console: true
+                , unsafe: true
+            }
+        })
+    ]
 };

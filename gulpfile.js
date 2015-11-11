@@ -1,20 +1,9 @@
 var gulp = require('gulp');                 //  main gulp module
-var args = require('yargs').argv;           //  tool for getting the arguments (file paths) in a stream
-//var connect = require('gulp-connect');      //  allow livereload our files in webbrowser
 var webpack = require('webpack');
 var config = require('./gulp.config.js');
 
-// unit testing
-//var jasminePhantomJs = require('gulp-jasmine2-phantomjs');
-var jasmine = require('gulp-jasmine');
-var reporters = require('jasmine-reporters');
-//var jasmine = require('gulp-jasmine-phantom');
-//var jasmineBrowser = require('gulp-jasmine-browser');
 
 var util = require('gulp-util');        //  Helps to write some logs out
-var gulpprint = require('gulp-print');  //  For printing all the files that gulp is 'touching' in a process
-var gulpif = require('gulp-if');        //  Plugin for adding 'if' condition to a stream (process)
-
 
 gulp.task('copy-html', function () {
     return gulp
@@ -37,9 +26,9 @@ gulp.task('release', ['copy-html'], function(){
 
 gulp.task('dev', function(callback) {
     var WebpackDevServer = require("webpack-dev-server");
-    var webpackConfig = require("./webpack.config.dev.js");
+    var webpackDevConfig = require("./webpack.config.dev.js");
 
-    var compiler = webpack(webpackConfig);
+    var compiler = webpack(webpackDevConfig);
 
     // Start a webpack-dev-server
     new WebpackDevServer(compiler, {
@@ -58,22 +47,26 @@ gulp.task('dev', function(callback) {
 });
 
 
-gulp.task('test', function(){
-    // Test JS
-    return gulp.src(config.allJSspecs)  //'test/*.html' ///*, 'specs/spec/lib/*.js'
-        .pipe(gulpif(args.verbose, gulpprint()))
-        .pipe(jasmine({
-            reporter: new reporters.TerminalReporter()
-        })); //jasminePhantomJs()
+gulp.task('test', function(callback) {
+    var resolve = require('path').resolve;
+    var webpackTestConfig = require('./webpack.config.test.js');
+    var karma = require('karma');
+    var Server = karma.Server;
+
+    var compiler = webpack(webpackTestConfig);
+    compiler.run(function(err, stats) {
+        if (err) {
+            gutil.log('webpack', err);
+            return;
+        }
+        Server.start({
+            configFile: resolve(__dirname, 'karma.conf.js')
+        }, function(exitCode) {
+            gutil.log('Karma has exited with ' + exitCode);
+            process.exit(exitCode);
+        });
+    });
+
 });
-
-
-//gulp.task('serverGulp', function(){
-//    connect.server({
-//        port: 8080,                                 // Server started at http://localhost:8080
-//        root: 'public',                              // place where our main files are
-//        livereload: true                            // livereload for our server
-//    })
-//});
 
 gulp.task("default", ["dev"]);

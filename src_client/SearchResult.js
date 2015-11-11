@@ -1,3 +1,4 @@
+
 export default class SearchResult{
     constructor($http){
         let baseURL = 'https://api.github.com/search/repositories';
@@ -21,4 +22,5 @@ export default class SearchResult{
     }
 } // end 'SearchResult' service
 
-//SearchResult.$inject = ['$http'];
+
+SearchResult.$inject = ['$http'];
