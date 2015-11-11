@@ -1,16 +1,25 @@
 
 import SearchResult from './SearchResult';
 
-export default describe('SearchResult service', () => {
+let searchResult;
 
-    beforeEach(angular.mock.module('app'));
+describe('SearchResult service', () => {
+    
+    beforeEach(
+        function(){
+            angular.mock.module('app');
+            searchResult = new SearchResult();
+            //console.log('$http', $http);
+            console.log('searchResult', searchResult)
+        }
+    );
 
     it('should have getResults method', () => {
-        expect(SearchResult.getResults).toEqual(jasmine.any(Function));
+        expect(searchResult.getResults).toEqual(jasmine.any(Function));
     });
 
-    it('should return and array after invocation', () => {
-        var result = SearchResult.getResults();
+    xit('should return and array after invocation', () => {
+        var result = searchResult.getResults();
 
         expect(result).toEqual(jasmine.any(Array));
     });

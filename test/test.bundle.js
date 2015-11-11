@@ -52,6 +52,8 @@
 
 	__webpack_require__(4);
 
+	__webpack_require__(7);
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -31455,29 +31457,62 @@
 	    value: true
 	});
 
-	var _SearchResult = __webpack_require__(5);
+	var _angular = __webpack_require__(1);
+
+	var _angular2 = _interopRequireDefault(_angular);
+
+	var _HomeController = __webpack_require__(5);
+
+	var _HomeController2 = _interopRequireDefault(_HomeController);
+
+	var _SearchResult = __webpack_require__(6);
 
 	var _SearchResult2 = _interopRequireDefault(_SearchResult);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = describe('SearchResult service', function () {
+	//import MainSearch from './mainSearch';
 
-	    beforeEach(angular.mock.module('app'));
+	exports.default = _angular2.default.module('app', []).controller('HomeController', _HomeController2.default).service('SearchResult', _SearchResult2.default);
 
-	    it('should have getResults method', function () {
-	        expect(_SearchResult2.default.getResults).toEqual(jasmine.any(Function));
-	    });
-
-	    it('should return and array after invocation', function () {
-	        var result = _SearchResult2.default.getResults();
-
-	        expect(result).toEqual(jasmine.any(Array));
-	    });
-	});
+	//let mainSearch = new MainSearch();
+	//console.log('mainSearch', mainSearch);
+	//document.body.appendChild(mainSearch.elem);
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var HomeController = function HomeController(SearchResult) {
+	    _classCallCheck(this, HomeController);
+
+	    var vm = this;
+	    //vm.SearchResult = SearchResult;
+	    console.log(this);
+	    vm.clickSubmitButton = clickSubmitButton;
+
+	    function clickSubmitButton(searchText) {
+	        SearchResult.getResults(searchText).then(function (data) {
+	            vm.searchResults = data;
+	        });
+	    }
+	};
+
+	exports.default = HomeController;
+	;
+
+	HomeController.$inject = ['SearchResult'];
+
+/***/ },
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31511,6 +31546,41 @@
 
 	exports.default = SearchResult;
 	SearchResult.$inject = ['$http'];
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _SearchResult = __webpack_require__(6);
+
+	var _SearchResult2 = _interopRequireDefault(_SearchResult);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var searchResult = undefined;
+
+	describe('SearchResult service', function () {
+
+	    beforeEach(function () {
+	        angular.mock.module('app');
+
+	        searchResult = new _SearchResult2.default();
+	        //console.log('$http', $http);
+	        console.log('searchResult', searchResult);
+	    });
+
+	    it('should have getResults method', function () {
+	        expect(searchResult.getResults).toEqual(jasmine.any(Function));
+	    });
+
+	    xit('should return and array after invocation', function () {
+	        var result = searchResult.getResults();
+
+	        expect(result).toEqual(jasmine.any(Array));
+	    });
+	});
 
 /***/ }
 /******/ ]);

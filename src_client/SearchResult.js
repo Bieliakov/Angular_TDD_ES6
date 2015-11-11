@@ -22,5 +22,4 @@ export default class SearchResult{
     }
 } // end 'SearchResult' service
 
-
 SearchResult.$inject = ['$http'];
