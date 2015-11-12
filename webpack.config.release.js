@@ -4,17 +4,17 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-    context: path.resolve(__dirname, 'src_client')
+    context: path.resolve(__dirname, 'src_client', 'app')
 
     ,entry: {
-        app: './app.js'
+        index: './index.js'
     }
     ,output: {
-        path: path.resolve(__dirname, 'public', 'js')
-        ,filename: "[name].bundle.js"
-        ,library: "[name]"
+        path: path.resolve(__dirname, 'build', 'src_client')
+        ,filename: '[hash].[name].bundle.js'
+        ,chunkFilename: '[hash].[id].bundle.js'
         //chunkFilename: "[id].bundle.js",
-        ,publicPath: "/"
+        //,publicPath: "/"
     }
 
     ,module: {

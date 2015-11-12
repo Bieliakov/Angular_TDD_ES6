@@ -5,10 +5,10 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        index: './test/index.js'
+        index: './src_client/test/index.js'
     },
     output: {
-        path: path.resolve(__dirname, 'test'),
+        path: path.resolve(__dirname, 'src_client', 'test'),
         filename: 'test.bundle.js'
     },
     //devtool: "cheap-module-inline-source-map",

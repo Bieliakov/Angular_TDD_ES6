@@ -24,6 +24,6 @@ todo in stack:
 
 ]
 Later:
-'introduction to React.js'
+'introduction to React.js' (https://reactforbeginners.com)
 
 'and become a great Developer   :)'

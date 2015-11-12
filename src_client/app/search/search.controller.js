@@ -1,4 +1,4 @@
-export default class HomeController{
+export default class SearchController{
     constructor(SearchResult){
         let vm = this;
         //vm.SearchResult = SearchResult;
@@ -13,4 +13,4 @@ export default class HomeController{
     }
 };
 
-HomeController.$inject = ['SearchResult'];
+SearchController.$inject = ['SearchResult'];

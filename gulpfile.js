@@ -5,20 +5,33 @@ var config = require('./gulp.config.js');
 
 var util = require('gulp-util');        //  Helps to write some logs out
 
-gulp.task('copy-html', function () {
-    return gulp
-        .src(config.allhtml)
-        .pipe(gulp.dest('./public'))
+//gulp.task('copy-html', function () {
+//    return gulp
+//        .src(config.allhtml)
+//        .pipe(gulp.dest('./public'))
+//
+//});
 
-});
+gulp.task('release',/* ['copy-html'],*/ function(){
 
-gulp.task('release', ['copy-html'], function(){
-
+    var path = require('path');
+    var replace = require('gulp-replace');
     var webpackReleaseConfig = require('./webpack.config.release.js');
+
+    require('rimraf').sync('build/');
+
     webpack(webpackReleaseConfig, function(err, stats) {
         if (err) {
             throw new util.PluginError('webpack', err);
         }
+
+        util.log('[webpack]', stats.toString());
+        gulp.src(['index.html'], {'base': '.'})
+            .pipe(replace('common.bundle.js', stats.hash + '.common.bundle.js'))
+            .pipe(replace('index.bundle.js', stats.hash + '.index.bundle.js'))
+            .pipe(gulp.dest('build/'))
+            //.on('end', callback);
+
     });
 
 
@@ -33,7 +46,7 @@ gulp.task('dev', function(callback) {
     // Start a webpack-dev-server
     new WebpackDevServer(compiler, {
         //historyApiFallback: true
-        publicPath: "/src_client/js/"
+        publicPath: "/src_client/"
         //contentBase: '/'
 
     }).listen(8080, "localhost", function(err) {
