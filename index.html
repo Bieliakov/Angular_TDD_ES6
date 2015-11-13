@@ -1,25 +1,14 @@
 <!doctype html>
-<html ng-app="GitHub">
+<html ng-app="github">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
 <body>
+
+<github-search></github-search>
+
+<script src="src_client/common.bundle.js"></script>
 <script src="src_client/index.bundle.js"></script>
-<div ng-controller="SearchController as search" ng-cloak>
-    <form method="get">
-        <input type="search" data-search="searchQuery" ng-model="searchText"/>
-        <input type="submit" data-search="submitButton" ng-click="search.clickSubmitButton(searchText)" />
-    </form>
-
-    <div id='results_container' ng-repeat="result in search.searchResults">
-        <div ng-bind="result.full_name"></div>
-    </div>
-    <div ng-if="search.searchResults.length < 1">
-            There are no results for query {{searchText}}
-    </div>
-
-</div>
-
 </body>
 </html>

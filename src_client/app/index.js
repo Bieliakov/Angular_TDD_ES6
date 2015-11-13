@@ -1,7 +1,9 @@
 import angular from 'angular';
 import './search/search.module.js';
 
-angular.module('GitHub', ['GitHub.search']);
+angular.module('github', ['github.search']);
+
+//angular.bootstrap(document, 'github');
 
 //import MainSearch from './search';
 

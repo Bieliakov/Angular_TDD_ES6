@@ -1,0 +1,15 @@
+
+<div ng-cloak>
+    <form method="get">
+        <input type="search" data-search="searchQuery" ng-model="searchText"/>
+        <input type="submit" data-search="submitButton" ng-click="searchCtrl.clickSubmitButton(searchText)" />
+    </form>
+
+    <div id='results_container' ng-repeat="result in searchCtrl.searchResults">
+        <div ng-bind="result.full_name"></div>
+    </div>
+    <div ng-if="searchCtrl.searchResults.length < 1">
+        There are no results for query {{searchText}}
+    </div>
+
+</div>
