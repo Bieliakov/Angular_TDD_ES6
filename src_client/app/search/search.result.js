@@ -1,5 +1,5 @@
 
-export default class SearchResult{
+class SearchResult{
     constructor($http){
         let apiUrl = 'https://api.github.com' + '/search';
 
@@ -11,23 +11,20 @@ export default class SearchResult{
             return $http({
                 method: 'GET',
                 url: `${apiUrl}/repositories`,
-                params: {
-                    q: query
-                }
+                params: { q: query }
             }).then(
                 response => response.data.items,
                 response => new Error('error')
             );
         }
-
-        //static factory($http) {
-        //    return new SearchResult($http);
-        //}
-
     }
-} // end 'SearchResult' service
 
-SearchResult.$inject = ['$http'];
+    static factory($http) {
+        return new SearchResult($http);
+    }
+}
+
+SearchResult.factory.$inject = ['$http'];
 
 angular.module('github.api.search', [])
-    .service('SearchResult', SearchResult);
+    .factory('SearchResult', SearchResult.factory);

@@ -5,5 +5,4 @@ import './search.result';
 
 export default angular.module('github.search', ['github.api.search'])
     .controller('SearchController', SearchController)
-    .directive('githubSearch', SearchDirective)
-    //.service('SearchResult', SearchResult);
+    .directive('githubSearch', SearchDirective);
