@@ -28,3 +28,6 @@ export default class SearchResult{
 } // end 'SearchResult' service
 
 SearchResult.$inject = ['$http'];
+
+angular.module('github.api.search', [])
+    .service('SearchResult', SearchResult);
