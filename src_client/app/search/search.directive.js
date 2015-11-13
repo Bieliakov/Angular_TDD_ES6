@@ -1,5 +1,6 @@
 'use strict';
 
+import './search.scss';
 import template from './search.html';
 
 class SearchDirective {

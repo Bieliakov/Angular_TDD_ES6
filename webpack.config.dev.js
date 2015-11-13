@@ -47,6 +47,10 @@ module.exports = {
                 loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions'
             },
             {
+                test: /\.scss/,
+                loader: 'style!css!autoprefixer?browsers=last 2 version!sass!'
+            },
+            {
                 test: /\.(eot|svg|ttf|woff|woff2)\w*/,
                 loader: 'file'
             },

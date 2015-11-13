@@ -14,7 +14,7 @@ class SearchResult{
                 params: { q: query }
             }).then(
                 response => response.data.items,
-                response => new Error('error')
+                response => new Error(response)
             );
         }
     }
