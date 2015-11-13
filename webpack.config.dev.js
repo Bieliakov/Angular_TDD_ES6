@@ -12,8 +12,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'build', 'js'),
         filename: "[name].bundle.js",
-        library: "[name]"
-        //chunkFilename: "[id].bundle.js",
+        library: "[name]",
+        chunkFilename: "[id].bundle.js"
         //publicPath: "/src_client/js/"
     },
 
@@ -30,11 +30,8 @@ module.exports = {
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify('Some var'),
             USER: '"hello"'
-        })
-        //, new webpack.optimize.CommonsChunkPlugin('common.bundle.js')
-        //, new webpack.optimize.commonsChunkPlugin({
-        //    name: 'common'
-        //})
+        }),
+        new webpack.optimize.CommonsChunkPlugin('common.bundle.js')
     ],
 
     module: {
@@ -48,6 +45,10 @@ module.exports = {
             ,{
                 test: /\.css$/,
                 loader: 'style-loader!css-loader!autoprefixer-loader?browsers=last 2 versions'
+            },
+            {
+                test: /\.scss/,
+                loader: 'style!css!autoprefixer?browsers=last 2 version!sass!'
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)\w*/,

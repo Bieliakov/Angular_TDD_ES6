@@ -1,24 +1,30 @@
 
-export default class SearchResult{
+class SearchResult{
     constructor($http){
-        let baseURL = 'https://api.github.com/search/repositories';
-        this.getResults = function (query) {
-            //console.log('query', query);
+        let apiUrl = 'https://api.github.com' + '/search';
+
+        return {
+            getResults: getResults
+        };
+
+        function getResults (query) {
             return $http({
                 method: 'GET',
-                url: baseURL,
-                params: {
-                    q: query
-                }
+                url: `${apiUrl}/repositories`,
+                params: { q: query }
             }).then(
-                response => response.data.items
-                ,
-                function errorCallback(response) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
-                });
-        };
+                response => response.data.items,
+                response => new Error(response)
+            );
+        }
     }
-} // end 'SearchResult' service
 
-SearchResult.$inject = ['$http'];
+    static factory($http) {
+        return new SearchResult($http);
+    }
+}
+
+SearchResult.factory.$inject = ['$http'];
+
+angular.module('github.api.search', [])
+    .factory('SearchResult', SearchResult.factory);

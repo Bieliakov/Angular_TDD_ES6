@@ -1,0 +1,23 @@
+@import "../../styles/const";
+
+.githubSearch{
+    background: aliceblue;
+
+    &--form{
+        &__searchButton{
+            height: $button-height;
+            background: $border-color;
+            color: $background-color;
+            border: none;
+            border-radius: $border-radius-small;
+        }
+    }
+
+    &--list {
+        margin: $githubSearch--listMargin;
+
+        &--item{
+            margin-bottom: $githubSearch--listMargin;
+        }
+    }
+}

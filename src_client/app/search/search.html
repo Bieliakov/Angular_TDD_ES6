@@ -1,0 +1,27 @@
+
+<div class="githubSearch" ng-cloak>
+    <form class="githubSearch--form" method="get">
+        <input type="search"
+               class="githubSearch--form__inputField"
+               data-search="searchQuery"
+               ng-model="searchText"/>
+        <input type="submit"
+               class="githubSearch--form__searchButton"
+               data-search="submitButton"
+               ng-click="searchCtrl.clickSubmitButton(searchText)"
+                value="Search"/>
+    </form>
+
+    <ol class="githubSearch--list">
+        <li class='githubSearch--list--item' ng-repeat="result in searchCtrl.searchResults">
+
+                <div class="githubSearch--list--item__fullName" ng-bind="result.full_name"></div>
+                <div class="githubSearch--list--item__description" ng-bind="result.description"></div>
+
+        </li>
+    </ol>
+    <div ng-if="searchCtrl.searchResults.length < 1">
+        There are no results for query {{searchText}}
+    </div>
+
+</div>

@@ -1,7 +1,8 @@
 
 import SearchController from './search.controller'
-import SearchResult from './search.result';
+import SearchDirective from './search.directive';
+import './search.result';
 
-export default angular.module('GitHub.search', [])
+export default angular.module('github.search', ['github.api.search'])
     .controller('SearchController', SearchController)
-    .service('SearchResult', SearchResult);
+    .directive('githubSearch', SearchDirective);

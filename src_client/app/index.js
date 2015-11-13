@@ -1,7 +1,12 @@
 import angular from 'angular';
 import './search/search.module.js';
 
-angular.module('GitHub', ['GitHub.search']);
+import 'normalize.css';
+import '../styles/main.scss';
+
+angular.module('github', ['github.search']);
+
+angular.bootstrap(document, ['github']);
 
 //import MainSearch from './search';
 
