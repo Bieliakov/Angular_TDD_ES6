@@ -16,7 +16,7 @@ class SearchDirective {
         this.controller = 'SearchController';
         this.controllerAs = 'searchCtrl';
         this.bindToController = {};
-
+        this.replace = true;
         this.template = template;
     }
 
