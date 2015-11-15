@@ -1,4 +1,6 @@
 
+
+
 import SearchController from './search.controller'
 import SearchDirective from './search.directive';
 import './search.result';

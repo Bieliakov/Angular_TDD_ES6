@@ -1,3 +1,9 @@
+
+/**
+ * @desc SearchDirective directive
+ * @example <github-search></github-search>
+ */
+
 'use strict';
 
 import './search.scss';
@@ -5,11 +11,11 @@ import template from './search.html';
 
 class SearchDirective {
     constructor() {
-        //this.restrict = 'EA';
-        //this.scope = {};
+        this.restrict = 'EA';
+        this.scope = {};
         this.controller = 'SearchController';
         this.controllerAs = 'searchCtrl';
-        //this.bindToController = {};
+        this.bindToController = {};
 
         this.template = template;
     }
