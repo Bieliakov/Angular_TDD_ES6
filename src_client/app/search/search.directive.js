@@ -10,7 +10,7 @@ import './search.scss';
 import template from './search.html';
 
 class SearchDirective {
-    constructor() {
+    constructor(template) {
         this.restrict = 'EA';
         this.scope = {};
         this.controller = 'SearchController';
@@ -21,7 +21,7 @@ class SearchDirective {
     }
 
     static directiveFactory() {
-        return new SearchDirective();
+        return new SearchDirective(template);
     }
 }
 

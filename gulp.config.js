@@ -6,5 +6,5 @@ module.exports = {
          **/
         // all src js files
         allhtml: [src + 'index.html'],
-        allJSspecs: ['specs/js/**/*_spec.js']
+        allJSspecs: ['specs/js/**/*.spec.js']
 };

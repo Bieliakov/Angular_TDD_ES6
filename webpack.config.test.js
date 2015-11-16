@@ -21,6 +21,10 @@ module.exports = {
                 loader: 'babel-loader?presets[]=es2015'
             }
             ,{
+                test: /\.scss/,
+                loader: 'style!css!autoprefixer?browsers=last 2 version!sass!'
+            }
+            ,{
                 test: /\.html$/,
                 loader: 'raw'//raw
             }

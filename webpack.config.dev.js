@@ -25,15 +25,6 @@ module.exports = {
 
     devtool: "cheap-module-inline-source-map",
 
-    plugins: [
-        new webpack.NoErrorsPlugin(),
-        new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify('Some var'),
-            USER: '"hello"'
-        }),
-        new webpack.optimize.CommonsChunkPlugin('common.bundle.js')
-    ],
-
     module: {
         loaders: [
             {
@@ -60,8 +51,16 @@ module.exports = {
             }
         ],
         noParse: /angular\/angular.js/
-    }
+    },
+    plugins: [
+        new webpack.NoErrorsPlugin(),
+        new webpack.DefinePlugin({
+            NODE_ENV: JSON.stringify('Some var'),
+            USER: '"hello"'
+        }),
+        new webpack.optimize.CommonsChunkPlugin('common.bundle.js')
 
+    ]
     //,resolve: {
     //    root: [
     //        path.resolve(__dirname),

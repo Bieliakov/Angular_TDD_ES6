@@ -1,5 +1,5 @@
 
-import SearchResult from './search.result';
+import SearchResult from './search.factory.js';
 
 describe('SearchResult service', () => {
 
