@@ -1,5 +1,5 @@
 
-class SearchResult{
+class SearchModel{
     constructor($http){
         let apiUrl = 'https://api.github.com' + '/search';
 
@@ -18,11 +18,11 @@ class SearchResult{
     }
 
     static factory($http) {
-        return new SearchResult($http);
+        return new SearchModel($http);
     }
 }
 
-SearchResult.factory.$inject = ['$http'];
+SearchModel.factory.$inject = ['$http'];
 
 angular.module('github.api.search', [])
-    .factory('SearchResult', SearchResult.factory);
+    .factory('SearchResult', SearchModel.factory);
