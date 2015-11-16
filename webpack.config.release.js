@@ -14,7 +14,7 @@ module.exports = {
         ,filename: '[hash].[name].bundle.js'
         ,chunkFilename: '[hash].[id].bundle.js'
         //chunkFilename: "[id].bundle.js",
-        //,publicPath: "/"
+        ,publicPath: "/src_client/"
     }
 
     ,module: {
@@ -24,6 +24,10 @@ module.exports = {
                 ,include: path.resolve(__dirname,'src_client')
                 ,exclude: [path.resolve(__dirname, "node_modules"), /_spec.js$/]
                 ,loader: 'babel-loader?presets[]=es2015' // !ng-annotate-loader
+            }
+            ,{
+                test: /\.scss/,
+                loader: 'style!css!autoprefixer?browsers=last 2 version!sass!'
             }
             ,{
                 test: /\.css$/
@@ -49,6 +53,7 @@ module.exports = {
                 ,drop_console: true
                 , unsafe: true
             }
-        })
+        }),
+        new webpack.optimize.CommonsChunkPlugin('[hash].common.bundle.js')
     ]
 };
