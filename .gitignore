@@ -2,3 +2,4 @@ node_modules
 .idea
 public
 app/test/test.bundle.js
+npm-debug.log

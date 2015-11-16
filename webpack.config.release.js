@@ -1,7 +1,7 @@
 'use strict';
 
-const webpack = require('webpack');
-const path = require('path');
+var webpack = require('webpack');
+var path = require('path');
 
 module.exports = {
     context: path.resolve(__dirname, 'src_client', 'app')

@@ -12,10 +12,8 @@ class SearchResult{
                 method: 'GET',
                 url: `${apiUrl}/repositories`,
                 params: { q: query }
-            }).then(
-                response => response.data.items,
-                response => new Error(response)
-            );
+            })  .then(response => response.data.items)
+                .catch(response => new Error(response));
         }
     }
 

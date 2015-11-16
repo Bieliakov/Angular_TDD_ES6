@@ -6,10 +6,11 @@ class SearchController{
         function clickSubmitButton (searchText){
             SearchResult.getResults(searchText).then( (data) => {
                 vm.searchResults = data;
+                return vm.searchResults;
             });
         }
     }
-};
+}
 
 SearchController.$inject = ['SearchResult'];
 
