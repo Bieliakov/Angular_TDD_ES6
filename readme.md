@@ -23,7 +23,19 @@ todo in stack:
 'continue watching webpack videos',
 
 ]
+
+
 Later:
 'introduction to React.js' (https://reactforbeginners.com)
+
+* optional
+* [
+[14:36:36] ***  ***
+это книга, где есть ката
+CodingDoJo
+https://www.youtube.com/watch?v=9xkfgprKTmY
+https://www.youtube.com/watch?v=-qA_MjNmpVU
+https://www.youtube.com/watch?v=-qA_MjNmpVU
+]
 
 'and become a great Developer   :)'
