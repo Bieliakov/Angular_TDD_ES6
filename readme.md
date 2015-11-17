@@ -8,7 +8,9 @@ https://github.com/johnpapa/angular-styleguide
 
 https://webpack.github.io/docs/usage-with-gulp.html https://github.com/webpack/webpack-with-common-libs/blob/master/gulpfile.js ]
 
-todo: []
+!todo: [
+    'add directive that emulates ng-repeat behaviour'
+]
 
 https://webpack.github.io/docs/usage-with-gulp.html
 https://github.com/webpack/webpack-with-common-libs/blob/master/gulpfile.js
