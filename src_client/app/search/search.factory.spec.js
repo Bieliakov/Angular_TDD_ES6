@@ -5,6 +5,8 @@ describe('SearchResult service', () => {
 
     //beforeEach(angular.mock.module('app'));
 
+    // should use $q instead of $httpBackend (by Illia)
+
     let searchResult;
     let $httpBackend;
 
