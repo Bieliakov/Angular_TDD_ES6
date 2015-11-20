@@ -211,9 +211,32 @@ var ngRepeatDirective = function($parse, $animate) {
                                 var endNode = ngRepeatEndComment.cloneNode(false);
                                 clone[clone.length++] = endNode;
 
+
+
+                                function enter(element, parent, after, options) {
+                                    parent = parent && angular.element(parent);
+                                    after = after && angular.element(after);
+                                    parent = parent || after.parent();
+                                    domInsert(element, parent, after);
+                                    //return $$animateQueue.push(element, 'enter', prepareAnimateOptions(options));
+                                }
+
+                                function domInsert(element, parentElement, afterElement) {
+                                    // if for some reason the previous element was removed
+                                    // from the dom sometime before this code runs then let's
+                                    // just stick to using the parent element as the anchor
+                                    if (afterElement) {
+                                        var afterNode = extractElementNode(afterElement);
+                                        if (afterNode && !afterNode.parentNode && !afterNode.previousElementSibling) {
+                                            afterElement = null;
+                                        }
+                                    }
+                                    afterElement ? afterElement.after(element) : parentElement.prepend(element);
+                                }
                                 // TODO(perf): support naked previousNode in `enter` to avoid creation of jqLite wrapper?
-                                $animate.enter(clone, null, jqLite(previousNode));
                                 previousNode = endNode;
+                                enter(clone, null, angular.element(previousNode));
+
                                 // Note: We only need the first/last node of the cloned nodes.
                                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
                                 // by a directive with templateUrl when its template arrives.
@@ -228,9 +251,38 @@ var ngRepeatDirective = function($parse, $animate) {
             };
         }
     };
-}
+};
 
 export default ngRepeatDirective;
+
+var uid  = 0;
+
+/**
+ * A consistent way of creating unique IDs in angular.
+ *
+ * Using simple numbers allows us to generate 28.6 million unique ids per second for 10 years before
+ * we hit number precision issues in JavaScript.
+ *
+ * Math.pow(2,53) / 60 / 60 / 24 / 365 / 10 = 28.6M
+ *
+ * @returns {number} an unique alpha-numeric string
+ */
+function nextUid() {
+    return ++uid;
+}
+
+var ELEMENT_NODE = 1;
+
+
+
+function extractElementNode(element) {
+    for (var i = 0; i < element.length; i++) {
+        var elm = element[i];
+        if (elm.nodeType === ELEMENT_NODE) {
+            return elm;
+        }
+    }
+}
 
 /**
  * Computes a hash of an 'obj'.
