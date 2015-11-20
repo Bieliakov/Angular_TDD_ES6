@@ -59,7 +59,9 @@ class RepeatDirective {
                 console.log('rhs', rhs);
                 $scope.$watchCollection(rhs, function repeatAction(collection) {
                     var nextBlockMap = {};
-
+                    if (!collection){
+                        return;
+                    }
                     var collectionKeys = collection;
                     var trackByIdFn = trackByIdArrayFn;
 
