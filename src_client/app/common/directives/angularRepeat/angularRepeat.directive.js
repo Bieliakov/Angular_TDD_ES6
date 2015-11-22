@@ -131,7 +131,7 @@ var ngRepeatDirective = function($parse, $animate) {
                         // if object, extract keys, in enumeration order, unsorted
                         collectionKeys = [];
                         for (var itemKey in collection) {
-                            if (hasOwnProperty.call(collection, itemKey) && itemKey.charAt(0) !== '$') {
+                            if (Object.prototype.hasOwnProperty.call(collection, itemKey) && itemKey.charAt(0) !== '$') {
                                 collectionKeys.push(itemKey);
                             }
                         }
