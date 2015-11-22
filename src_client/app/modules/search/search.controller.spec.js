@@ -1,5 +1,5 @@
 
-import SearchController from './search.controller';
+import SearchController from './search.controller.js';
 
 let searchController;
 let query = 'some query';

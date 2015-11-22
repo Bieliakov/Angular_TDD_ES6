@@ -1,18 +1,14 @@
 import angular from 'angular';
-import './search/search.module.js';
-import './directives/index.js';
+import './modules/search/search.module.js';
 
 import 'normalize.css';
 import '../styles/main.scss';
 
-angular.module('github', ['github.search', 'directives']);
+import './common/directives/repeat/repeat.module.js';
+import './common/directives/angularRepeat/angularRepeat.module.js';
+
+angular.module('github', ['github.search', 'repeat', 'angularRepeat']);
 
 angular.bootstrap(document, ['github']);
-
-//import MainSearch from './search';
-
-//let search = new MainSearch();
-//console.log('search', search);
-//document.body.appendChild(search.elem);
 
 

@@ -13,7 +13,7 @@
     </form>
 
     <ol class="githubSearch--list">
-        <li class='githubSearch--list--item' repeat="result in searchCtrl.searchResults">
+        <li class='githubSearch--list--item' angular-repeat="result in searchCtrl.searchResults">
 
                 <div class="githubSearch--list--item__fullName" ng-bind="result.full_name"></div>
                 <div class="githubSearch--list--item__description" ng-bind="result.description"></div>

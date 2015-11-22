@@ -33,9 +33,9 @@ var ngRepeatDirective = function($parse, $animate) {
         priority: 1000,
         terminal: true,
         $$tlb: true,
-        compile: function ngRepeatCompile($element, $attr) {
+        compile: function angularRepeatCompile($element, $attr) {
             var expression = $attr.angularRepeat;
-            var ngRepeatEndComment = document.createComment(' end ngRepeat: ' + expression + ' ');
+            var angularRepeatEndComment = document.createComment(' end angularRepeat: ' + expression + ' ');
 
             var match = expression.match(/^\s*([\s\S]+?)\s+in\s+([\s\S]+?)(?:\s+as\s+([\s\S]+?))?(?:\s+track\s+by\s+([\s\S]+?))?\s*$/);
 
@@ -50,6 +50,7 @@ var ngRepeatDirective = function($parse, $animate) {
             var trackByExp = match[4];
 
             match = lhs.match(/^(?:(\s*[\$\w]+)|\(\s*([\$\w]+)\s*,\s*([\$\w]+)\s*\))$/);
+
 
             if (!match) {
                 throw ngRepeatMinErr('iidexp', "'_item_' in '_item_ in _collection_' should be an identifier or '(_key_, _value_)' expression, but got '{0}'.",
@@ -78,7 +79,7 @@ var ngRepeatDirective = function($parse, $animate) {
                 };
             }
 
-            return function ngRepeatLink($scope, $element, $attr, ctrl, $transclude) {
+            return function angularRepeatLink($scope, $element, $attr, ctrl, $transclude) {
 
                 if (trackByExpGetter) {
                     trackByIdExpFn = function(key, value, index) {
@@ -101,7 +102,7 @@ var ngRepeatDirective = function($parse, $animate) {
                 var lastBlockMap = createMap();
 
                 //watch props
-                $scope.$watchCollection(rhs, function ngRepeatAction(collection) {
+                $scope.$watchCollection(rhs, function angularRepeatAction(collection) {
                     var index, length,
                         previousNode = $element[0],     // node that cloned nodes should be inserted after
                                                         // initialized to the comment node anchor
@@ -199,44 +200,21 @@ var ngRepeatDirective = function($parse, $animate) {
 
                             if (getBlockStart(block) != nextNode) {
                                 // existing item which got moved
-                                $animate.move(getBlockNodes(block.clone), null, jqLite(previousNode));
+                                $animate.move(getBlockNodes(block.clone), null, angular.element(previousNode));
                             }
                             previousNode = getBlockEnd(block);
                             updateScope(block.scope, index, valueIdentifier, value, keyIdentifier, key, collectionLength);
                         } else {
                             // new item which we don't know about
-                            $transclude(function ngRepeatTransclude(clone, scope) {
+                            $transclude(function angularRepeatTransclude(clone, scope) {
                                 block.scope = scope;
                                 // http://jsperf.com/clone-vs-createcomment
-                                var endNode = ngRepeatEndComment.cloneNode(false);
+                                var endNode = angularRepeatEndComment.cloneNode(false);
                                 clone[clone.length++] = endNode;
 
-
-
-                                function enter(element, parent, after, options) {
-                                    parent = parent && angular.element(parent);
-                                    after = after && angular.element(after);
-                                    parent = parent || after.parent();
-                                    domInsert(element, parent, after);
-                                    //return $$animateQueue.push(element, 'enter', prepareAnimateOptions(options));
-                                }
-
-                                function domInsert(element, parentElement, afterElement) {
-                                    // if for some reason the previous element was removed
-                                    // from the dom sometime before this code runs then let's
-                                    // just stick to using the parent element as the anchor
-                                    if (afterElement) {
-                                        var afterNode = extractElementNode(afterElement);
-                                        if (afterNode && !afterNode.parentNode && !afterNode.previousElementSibling) {
-                                            afterElement = null;
-                                        }
-                                    }
-                                    afterElement ? afterElement.after(element) : parentElement.prepend(element);
-                                }
                                 // TODO(perf): support naked previousNode in `enter` to avoid creation of jqLite wrapper?
+                                $animate.enter(clone, null, angular.element(previousNode));
                                 previousNode = endNode;
-                                enter(clone, null, angular.element(previousNode));
-
                                 // Note: We only need the first/last node of the cloned nodes.
                                 // However, we need to keep the reference to the jqlite wrapper as it might be changed later
                                 // by a directive with templateUrl when its template arrives.
@@ -244,6 +222,7 @@ var ngRepeatDirective = function($parse, $animate) {
                                 nextBlockMap[block.id] = block;
                                 updateScope(block.scope, index, valueIdentifier, value, keyIdentifier, key, collectionLength);
                             });
+
                         }
                     }
                     lastBlockMap = nextBlockMap;
@@ -253,7 +232,45 @@ var ngRepeatDirective = function($parse, $animate) {
     };
 };
 
+ngRepeatDirective.$inject = ['$parse', '$animate'];
+
 export default ngRepeatDirective;
+
+function domInsert(element, parentElement, afterElement) {
+    // if for some reason the previous element was removed
+    // from the dom sometime before this code runs then let's
+    // just stick to using the parent element as the anchor
+    if (afterElement) {
+        var afterNode = extractElementNode(afterElement);
+        if (afterNode && !afterNode.parentNode && !afterNode.previousElementSibling) {
+            afterElement = null;
+        }
+    }
+    afterElement ? afterElement.after(element) : parentElement.prepend(element);
+}
+
+/**
+ * Return the DOM siblings between the first and last node in the given array.
+ * @param {Array} array like object
+ * @returns {Array} the inputted object or a jqLite collection containing the nodes
+ */
+function getBlockNodes(nodes) {
+    // TODO(perf): update `nodes` instead of creating a new object?
+    var node = nodes[0];
+    var endNode = nodes[nodes.length - 1];
+    var blockNodes;
+
+    for (var i = 1; node !== endNode && (node = node.nextSibling); i++) {
+        if (blockNodes || nodes[i] !== node) {
+            if (!blockNodes) {
+                blockNodes = jqLite(slice.call(nodes, 0, i));
+            }
+            blockNodes.push(node);
+        }
+    }
+
+    return blockNodes || nodes;
+}
 
 var uid  = 0;
 

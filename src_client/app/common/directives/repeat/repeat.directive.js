@@ -41,7 +41,7 @@ class RepeatDirective {
             // match[0] =  "result in searchCtrl.searchResults"
             // lhs = "result"
             // rhs = "searchCtrl.searchResults"
-
+            console.log('$attr in compile',$attr);
             var lhs = match[1];
             var rhs = match[2];
 
@@ -54,8 +54,8 @@ class RepeatDirective {
 
             return function repeatLink($scope, $element, $attr, ctrl, $transclude) {
                 var lastBlockMap = {};
-
-                console.log('$scope', $scope);
+                console.log('$attr',$attr);
+                //console.log('$scope', $scope);
                 console.log('rhs', rhs);
                 $scope.$watchCollection(rhs, function repeatAction(collection) {
                     var nextBlockMap = {};
