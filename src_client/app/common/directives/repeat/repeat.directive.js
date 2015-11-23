@@ -58,6 +58,10 @@ class RepeatDirective {
 
             return function repeatLink($scope, $element, $attr, ctrl, $transclude) {
                 var lastBlockMap = {};
+
+                // maybe compare ng-bind value with lastBlockMap property content
+
+                console.log('$scope', $scope);
                 console.log('$attr',$attr);
                 //console.log('$scope', $scope);
                 console.log('rhs', rhs);
@@ -72,7 +76,7 @@ class RepeatDirective {
                     }
 
 
-                    
+
                     console.log('collection', collection)
                     var arrayOfSplicedElements = [];
                     if (previousCollection.length && previousCollection.length !== collection.length){
