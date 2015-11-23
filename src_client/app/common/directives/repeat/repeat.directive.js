@@ -61,12 +61,14 @@ class RepeatDirective {
 
                 // maybe compare ng-bind value with lastBlockMap property content
 
-                console.log('$scope', $scope);
-                console.log('$attr',$attr);
                 //console.log('$scope', $scope);
-                console.log('rhs', rhs);
+                //console.log('$attr',$attr);
+                //console.log('$scope', $scope);
+                //console.log('rhs', rhs);
 
                 var previousCollection = [];
+                var objectsForRemoval = [];
+                var objectsForAppending = [];
 
                 $scope.$watchCollection(rhs, function repeatAction(collection) {
                     var length;
@@ -74,30 +76,6 @@ class RepeatDirective {
                     if (!collection){
                         return;
                     }
-
-
-
-                    console.log('collection', collection)
-                    var arrayOfSplicedElements = [];
-                    if (previousCollection.length && previousCollection.length !== collection.length){
-                        for (var i = collection.length - 1; i >= 0; i--){
-                            //console.log('angular.equals(previousCollection[i], collection[i])', angular.equals(previousCollection[i], collection[i]))
-                            //console.log('previousCollection[i]', previousCollection[i]);
-                            //console.log('collection[i]', collection[i]);
-                            for (var j = 0; j < previousCollection.length; i++){
-                                if (previousCollection[i]['$$hashkey'] === collection[j]['$$hashkey']){
-                                    var splicedElement = collection.splice(i, 1);
-                                    arrayOfSplicedElements.push(splicedElement);
-                                    console.log('splicedElement', splicedElement);
-                                    break;
-                                }
-                            }
-
-                        }
-                    }
-                    previousCollection = collection;
-
-
 
                     var collectionKeys = collection;
                     var trackByIdFn = trackByIdArrayFn;
@@ -123,77 +101,93 @@ class RepeatDirective {
                         }
                     }
 
+                    //console.log('collection', collection);
+                    objectsForRemoval = [];
+                    objectsForAppending = [];
+
+                    if (previousCollection.length > 0){
+                        for (var i = collectionLength - 1; i >= 0; i--){
+                            //console.log('angular.equals(previousCollection[i], collection[i])', angular.equals(previousCollection[i], collection[i]))
+                            //console.log('previousCollection[i]', previousCollection[i]);
+                            //console.log('collection[i]', collection[i]);
+                            var found = false;
+                            for (var j = previousCollection.length - 1; j >= 0; j--){
+
+                                // id property hardcoded
+                                if (collection[i]['id'] === previousCollection[j]['id']){
+                                    found = true;
+                                    previousCollection.splice(j, 1);
+                                    break;
+                                }
+                                //if (j == 0){
+                                //    objectsForRemoval.push(collection[i]);
+                                //}
+                            }
+                            if (!found){
+                                objectsForAppending.push(collection[i]);
+                            }
+
+                        }
+                    } else {
+                        //objectsForRemoval = [];
+                        objectsForAppending = collection;
+                    }
+                    //console.log('objectsForRemoval', objectsForRemoval);
+
+                    console.log('previousCollection', previousCollection);
+                    console.log('objectsForAppending', objectsForAppending);
+
+                    console.log('lastBlockMap', lastBlockMap);
+
                     //item1.isEqualNode(item2)
                     // remove leftover items
                     for (var blockKey in lastBlockMap) {
+
                         block = lastBlockMap[blockKey];
-                        console.log('block.clone[0] in destroy', block.clone[0]);
-                        var elementsToRemove = getBlockNodes(block.clone);
-                        elementsToRemove.remove();
-                        if (elementsToRemove[0].parentNode) {
-                            // if the element was not removed yet because of pending animation, mark it as deleted
-                            // so that we can ignore it later
-                            for (index = 0, length = elementsToRemove.length; index < length; index++) {
-                                elementsToRemove[index][NG_REMOVED] = true;
+                        var remove = false;
+                        if (previousCollection.length){
+                            for (var i = 0; i < previousCollection.length; i++){
+                                if (!block.scope){
+                                    delete lastBlockMap[blockKey];
+                                    remove = false;
+                                    break;
+                                }
+                                if (block.scope[lhs]['id'] == previousCollection[i]['id']){
+                                    //previousCollection.splice(i, 1);
+                                    remove = true;
+                                    break;
+                                }
                             }
                         }
-                        block.scope.$destroy();
+                        if (remove) {
+                            console.log('remove block',  block);
+                            //console.log('block.clone[0] in destroy', block.clone[0]);
+                            //console.log('block.scope[lhs]', block.scope[lhs]);
+                            var elementsToRemove = getBlockNodes(block.clone);
+                            elementsToRemove.remove();
+                            if (elementsToRemove[0].parentNode) {
+                                // if the element was not removed yet because of pending animation, mark it as deleted
+                                // so that we can ignore it later
+                                for (index = 0, length = elementsToRemove.length; index < length; index++) {
+                                    elementsToRemove[index][NG_REMOVED] = true;
+                                }
+                            }
+                            block.scope.$destroy();
+                        }
                     }
 
-                    for (index = 0; index < collectionLength; index++) {
+                    for (index = 0; index < objectsForAppending.length; index++) {
                         key = (collection === collectionKeys) ? index : collectionKeys[index];
-                        value = collection[key];
-                        block = nextBlockOrder[index];
+                        value = objectsForAppending[key];
+                        block = objectsForAppending[key];
+                        //block = nextBlockOrder[index];
 
                         $transclude(function repeatTransclude(clone, scope) {
 
-                            //for (var prop in clone[0]){
-                            //    console.log(prop,':',clone[0][prop] )
-                            //}
-                            //console.log('clone[0].innerText', clone[0].innerText);
-                            //var innerText = '';
-                            //var childNodes = clone[0].childNodes;
-                            //console.log('childNodes', childNodes)
-                            //for (var i = 0; i < childNodes.length; i++){
-                            //
-                            //    if (childNodes[i].nodeType === 3){
-                            //        console.log('childNodes[i].data', childNodes[i].data);
-                            //        innerText += childNodes[i].data;
-                            //    } else if (childNodes[i].nodeType === 1){
-                            //        console.log('childNodes[i].innerText', childNodes[i].innerText);
-                            //        innerText += childNodes[i].innerText;
-                            //    }
-                            //
-                            //
-                            //}
-                            //console.log('innerText', innerText)
-                            //console.log('scope', scope);
-
+                            console.log('scope', scope);
 
                             block.scope = scope;
 
-                            //var endNode = repeatEndComment.cloneNode(false);
-                            //clone[clone.length++] = endNode;
-                            //
-                            //function enter(element, parentElement, afterElement) {
-                            //    parentElement = afterElement.parent();
-                            //    console.log('parentElement', parentElement);
-                            //    domInsert(element, parentElement, afterElement);
-                            //}
-                            //
-                            //function domInsert(element, parentElement, afterElement) {
-                            //
-                            //    //parentElement.prepend(element);
-                            //    afterElement.after(element);
-                            //}
-                            //var previousNode = angular.element(endNode);
-                            //
-                            //var elem = angular.element(clone);
-                            //console.log('elem', elem);
-                            //enter(elem, null, previousNode);
-
-                            console.log('$element',$element)
-                            console.log('$element.parent()',$element.parent())
                             $element.parent().append(clone[0]);
 
                             //document.body.appendChild(clone[0])
@@ -207,8 +201,9 @@ class RepeatDirective {
                         });
 
                     }
+                    previousCollection = collection;
                     lastBlockMap = nextBlockMap;
-                    console.log('lastBlockMap', lastBlockMap);
+                    //console.log('lastBlockMap', lastBlockMap);
                 });
             }
 
@@ -268,7 +263,7 @@ function getBlockNodes(nodes) {
     for (var i = 1; node !== endNode && (node = node.nextSibling); i++) {
         if (blockNodes || nodes[i] !== node) {
             if (!blockNodes) {
-                blockNodes = jqLite(slice.call(nodes, 0, i));
+                blockNodes = angular.element(Array.prototype.slice.call(nodes, 0, i));
             }
             blockNodes.push(node);
         }
