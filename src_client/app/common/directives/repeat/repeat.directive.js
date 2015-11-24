@@ -71,6 +71,10 @@ class RepeatDirective {
 
                 $scope.$watchCollection(rhs, function repeatAction(collection, previousCollection) {
                     var length;
+                    var key;
+                    var block;
+                    var value;
+                    var index;
                     var nextBlockMap = {};
                     if (!collection){
                         return;
@@ -83,22 +87,22 @@ class RepeatDirective {
                     var nextBlockOrder = new Array(collectionLength);
 
                     // locate existing items
-                    for (var index = 0; index < collectionLength; index++) {
-                        var key = (collection === collectionKeys) ? index : collectionKeys[index];
-                        var value = collection[key];
-                        var trackById = trackByIdFn(key, value, index);
-                        if (lastBlockMap[trackById]) {
-                            // found previously seen block
-                            var block = lastBlockMap[trackById];
-                            delete lastBlockMap[trackById];
-                            nextBlockMap[trackById] = block;
-                            nextBlockOrder[index] = block;
-                        } else {
-                            // new never before seen block
-                            nextBlockOrder[index] = {id: trackById, scope: undefined, clone: undefined};
-                            nextBlockMap[trackById] = true;
-                        }
-                    }
+                    //for (index = 0; index < collectionLength; index++) {
+                    //    key = (collection === collectionKeys) ? index : collectionKeys[index];
+                    //    value = collection[key];
+                    //    var trackById = trackByIdFn(key, value, index);
+                    //    if (lastBlockMap[trackById]) {
+                    //        // found previously seen block
+                    //        var block = lastBlockMap[trackById];
+                    //        delete lastBlockMap[trackById];
+                    //        //nextBlockMap[trackById] = block;
+                    //        //nextBlockOrder[index] = block;
+                    //    } else {
+                    //        // new never before seen block
+                    //        //nextBlockOrder[index] = {id: trackById, scope: undefined, clone: undefined};
+                    //        //nextBlockMap[trackById] = true;
+                    //    }
+                    //}
 
                     //console.log('collection', collection);
                     objectsForRemoval = [];
@@ -195,12 +199,12 @@ class RepeatDirective {
                             // However, we need to keep the reference to the jqlite wrapper as it might be changed later
                             // by a directive with templateUrl when its template arrives.
                             block.clone = clone;
-                            nextBlockMap[block.id] = block;
+                            lastBlockMap[block.id] = block;
                             updateScope(block.scope, index, valueIdentifier, value, keyIdentifier, key, collectionLength);
                         });
 
                     }
-                    lastBlockMap = nextBlockMap;
+                    //lastBlockMap = nextBlockMap;
                     //console.log('lastBlockMap', lastBlockMap);
                 });
             }
