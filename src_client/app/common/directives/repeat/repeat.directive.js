@@ -66,11 +66,10 @@ class RepeatDirective {
                 //console.log('$scope', $scope);
                 //console.log('rhs', rhs);
 
-                var previousCollection = [];
                 var objectsForRemoval = [];
                 var objectsForAppending = [];
 
-                $scope.$watchCollection(rhs, function repeatAction(collection) {
+                $scope.$watchCollection(rhs, function repeatAction(collection, previousCollection) {
                     var length;
                     var nextBlockMap = {};
                     if (!collection){
@@ -105,7 +104,7 @@ class RepeatDirective {
                     objectsForRemoval = [];
                     objectsForAppending = [];
 
-                    if (previousCollection.length > 0){
+                    if (previousCollection && previousCollection.length > 0){
                         for (var i = collectionLength - 1; i >= 0; i--){
                             //console.log('angular.equals(previousCollection[i], collection[i])', angular.equals(previousCollection[i], collection[i]))
                             //console.log('previousCollection[i]', previousCollection[i]);
@@ -201,7 +200,6 @@ class RepeatDirective {
                         });
 
                     }
-                    previousCollection = collection;
                     lastBlockMap = nextBlockMap;
                     //console.log('lastBlockMap', lastBlockMap);
                 });
