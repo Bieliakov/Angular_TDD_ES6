@@ -210,40 +210,6 @@ class RepeatDirective {
             }
 
         };
-
-        //this.compile = function(tElement, tAttrs) {
-        //    var parentElement = tElement.parent();
-        //    return function(scope, element, attrs, ctrl, transclude) {
-        //        transclude(scope.$new(), function(clone) {
-        //            parentElement.append(clone);
-        //        });
-        //        transclude(scope.$new(), function(clone) {
-        //            parentElement.append(clone);
-        //        });
-        //        transclude(scope.$new(), function(clone) {
-        //            parentElement.append(clone);
-        //        });
-        //    };
-        //};
-
-
-        //this.link = {
-        //    post: function(scope, element, attrs, ctrl, transclude) {
-        //        transclude(scope.$new(),function(clone, scope) {
-        //            element.append(clone);
-        //        });
-        //        transclude(scope.$new(),function(clone, scope) {
-        //            element.append(clone);
-        //        });
-        //        transclude(scope.$new(),function(clone, scope) {
-        //            element.append(clone);
-        //        });
-        //    }
-        //};
-        //
-        //this.controller = function(){
-        //    this.data = [0,1,2,3,4,5];
-        //};
     }
 
     static directiveFactory() {
@@ -276,16 +242,6 @@ function getBlockNodes(nodes) {
 
 var uid  = 0;
 
-/**
- * A consistent way of creating unique IDs in angular.
- *
- * Using simple numbers allows us to generate 28.6 million unique ids per second for 10 years before
- * we hit number precision issues in JavaScript.
- *
- * Math.pow(2,53) / 60 / 60 / 24 / 365 / 10 = 28.6M
- *
- * @returns {number} an unique alpha-numeric string
- */
 function nextUid() {
     return ++uid;
 }
