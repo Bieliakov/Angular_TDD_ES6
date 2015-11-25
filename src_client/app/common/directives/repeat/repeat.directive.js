@@ -27,15 +27,9 @@ var updateScope = function(scope, index, valueIdentifier, value, keyIdentifier, 
 class RepeatDirective {
     constructor(template) {
         this.restrict = 'A';
-        //this.scope = {};
-        //this.controller = 'SearchController';
-        //this.controllerAs = 'searchCtrl';
-        //this.bindToController = {};
-        //this.replace = true;
         this.priority = 1000;
         this.terminal = true;
         this.transclude = 'element';
-        //this.template = template;
 
         this.compile = function repeatCompile($element, $attr) {
             var expression = $attr.repeat;
@@ -51,10 +45,6 @@ class RepeatDirective {
 
             var valueIdentifier = match[1];
             var keyIdentifier = match[2];
-
-            var trackByIdArrayFn = function(key, value) {
-                return hashKey(value);
-            };
 
             return function repeatLink($scope, $element, $attr, ctrl, $transclude) {
                 var lastBlockMap = {};
@@ -75,34 +65,15 @@ class RepeatDirective {
                     var block;
                     var value;
                     var index;
-                    var nextBlockMap = {};
+
                     if (!collection){
                         return;
                     }
 
                     var collectionKeys = collection;
-                    var trackByIdFn = trackByIdArrayFn;
 
                     var collectionLength = collectionKeys.length;
-                    var nextBlockOrder = new Array(collectionLength);
 
-                    // locate existing items
-                    //for (index = 0; index < collectionLength; index++) {
-                    //    key = (collection === collectionKeys) ? index : collectionKeys[index];
-                    //    value = collection[key];
-                    //    var trackById = trackByIdFn(key, value, index);
-                    //    if (lastBlockMap[trackById]) {
-                    //        // found previously seen block
-                    //        var block = lastBlockMap[trackById];
-                    //        delete lastBlockMap[trackById];
-                    //        //nextBlockMap[trackById] = block;
-                    //        //nextBlockOrder[index] = block;
-                    //    } else {
-                    //        // new never before seen block
-                    //        //nextBlockOrder[index] = {id: trackById, scope: undefined, clone: undefined};
-                    //        //nextBlockMap[trackById] = true;
-                    //    }
-                    //}
 
                     //console.log('collection', collection);
                     objectsForRemoval = [];
@@ -110,9 +81,7 @@ class RepeatDirective {
 
                     if (previousCollection && previousCollection.length > 0){
                         for (var i = collectionLength - 1; i >= 0; i--){
-                            //console.log('angular.equals(previousCollection[i], collection[i])', angular.equals(previousCollection[i], collection[i]))
-                            //console.log('previousCollection[i]', previousCollection[i]);
-                            //console.log('collection[i]', collection[i]);
+
                             var found = false;
                             for (var j = previousCollection.length - 1; j >= 0; j--){
 
