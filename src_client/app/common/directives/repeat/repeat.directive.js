@@ -132,6 +132,10 @@ class RepeatDirective {
 
                         }
                     } else {
+                        //for (var i = collectionLength - 1; i >= 0; i--) {
+                        //    collection[i]['$$hashKey'] = nextUid();
+                        //}
+
                         //objectsForRemoval = [];
                         objectsForAppending = collection;
                     }
@@ -176,6 +180,7 @@ class RepeatDirective {
                                 }
                             }
                             block.scope.$destroy();
+                            delete lastBlockMap[blockKey];
                         }
                     }
 
